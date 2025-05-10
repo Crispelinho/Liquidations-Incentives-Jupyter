@@ -36,6 +36,7 @@ class DataframeLoader:
     df_rentabilidad_kam = None
     df_venta_servicios_mtto = None
     df_objetivos_cualitativos = None
+    df_kpi_calidad = None
     df_incentivos_por_empleado = None
     df_area_calculo_sba = None
     df_factores_liquidacion = None
@@ -50,6 +51,7 @@ class DataframeLoader:
     df_parrillas_tipos_calculos = None
     df_area_calculo_sba_centros_costos = None
     df_renal_ambulatorio = None
+    df_TRM = None
     
     def __init__(self, base_dir, sub_direct):
         self.base_dir = base_dir
@@ -63,7 +65,7 @@ class DataframeLoader:
             self.OUTPUT_FOLDER = OUTPUT_FOLDER
 
         if 'fecha_liquidacion' not in locals():
-            fecha_liquidacion = '2024-05-01'
+            fecha_liquidacion = '2025-03-01'
             self.fecha_liquidacion = fecha_liquidacion
             
         if 'meses_incentivos' not in locals():
@@ -348,6 +350,17 @@ class DataframeLoader:
             )
             self.df_objetivos_cualitativos = df_objetivos_cualitativos
             
+        if 'df_kpi_calidad' not in locals():
+            df_kpi_calidad = pd.read_excel(
+                io=os.path.join(folder_bbraun_source, 'KpiCalidad.xlsx'),
+                dtype={
+                    # 'Fecha': np.datetime64,
+                    'CodigoEmpleado': str,
+                    'PorcentajeCumplimiento': float
+                }
+            )
+            self.df_kpi_calidad = df_kpi_calidad
+            
         if 'df_incentivos_por_empleado' not in locals():
             df_incentivos_por_empleado = pd.read_excel(
                 io=os.path.join(folder_bbraun_source, 'IncentivosPorEmpleado.xlsx'),
@@ -536,6 +549,19 @@ class DataframeLoader:
             )
             self.df_renal_ambulatorio = df_renal_ambulatorio
 
+        if 'df_TRM' not in locals():
+            df_TRM = pd.read_excel(
+                io=os.path.join(folder_bbraun_source, 'TRM.xlsx'),
+                dtype={
+                    'Year': int,
+                    'Month': int,
+                    'Currency': float,
+                    'Value': float,
+                    'Average': float,
+                }
+            )
+            self.df_TRM = df_TRM
+
         if 'codigos_ve_vc' not in locals():
             codigos_ve_vc = ['5002700']
             self.codigos_ve_vc = codigos_ve_vc
@@ -669,6 +695,7 @@ class DataframeLoader:
             df_rentabilidad_kam,
             df_venta_servicios_mtto,
             df_objetivos_cualitativos,
+            df_kpi_calidad,
             df_incentivos_por_empleado,
             df_area_calculo_sba,
             df_factores_liquidacion,
@@ -683,6 +710,7 @@ class DataframeLoader:
             df_parrillas_tipos_calculos,
             df_area_calculo_sba_centros_costos,
             df_renal_ambulatorio,
+            df_TRM,
             codigos_ve_vc,
             _dataframes_entrada,
             fecha_liquidacion,
