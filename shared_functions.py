@@ -65,7 +65,7 @@ class DataframeLoader:
             self.OUTPUT_FOLDER = OUTPUT_FOLDER
 
         if 'fecha_liquidacion' not in locals():
-            fecha_liquidacion = '2025-03-01'
+            fecha_liquidacion = '2025-12-01'
             self.fecha_liquidacion = fecha_liquidacion
             
         if 'meses_incentivos' not in locals():
